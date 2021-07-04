@@ -5,25 +5,29 @@
 
 namespace SCGAL {
 
+	// This class alos contains functors;
 	template < typename FT_, typename Kernel_ >
 	struct Cartesian_base_no_ref_count// haven't implemented;
 		:public Cartesian_base< Kernel_, FT_ > {
 
-		typedef FT_                                           RT;
-		typedef FT_                                           FT;
-		// The mechanism that allows to specify reference-counting or not.
-		template < typename T >
-		struct Handle { typedef T   type; };
 
-		template < typename Kernel2 >
-		struct Base { typedef Cartesian_base_no_ref_count<FT_, Kernel2>  Type; };
 
 		typedef Kernel_ K;
-//#define CGAL_Kernel_pred(Y,Z) typedef CartesianKernelFunctors::Y<K> Y; \
-                              Y Z() const { return Y(); }
-//#define CGAL_Kernel_cons(Y,Z) CGAL_Kernel_pred(Y,Z)
 
-//#include <Kernel/interface_macros.h>
+		typedef typename CartesianKernelFunctors::Less_xy_2<K>         Less_xy_2;
+		Less_xy_2 Less_xy_2_Object() const { return Less_xy_2(); }
+
+		typedef typename CartesianKernelFunctors::Less_rotate_ccw_2<K>         Less_rotate_ccw_2;
+		Less_rotate_ccw_2 Less_rotate_ccw_2_Object() const { return Less_rotate_ccw_2(); }
+
+		typedef typename CartesianKernelFunctors::Compare_xy_2<K>         Compare_xy_2;
+		Compare_xy_2 Compare_xy_2_Object() const { return Compare_xy_2(); }
+
+
+		typedef typename CartesianKernelFunctors::Orientation_2<K>         Orientation_2;
+		Orientation_2 Orientation_2_Object() const { return Orientation_2(); }
+
+		
 
 	};
 
@@ -31,10 +35,8 @@ namespace SCGAL {
 
 	template <typename FT_>
 	struct Simple_cartesian
-		:public Type_equality_wrapper<
-		Cartesian_base_no_ref_count<FT_, Simple_cartesian<FT_> >,
-		Simple_cartesian<FT_>>
-	{};
+		:public Cartesian_base_no_ref_count<FT_, Simple_cartesian<FT_> >
+	    {};
 
 }
 

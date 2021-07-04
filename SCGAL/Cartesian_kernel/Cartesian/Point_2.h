@@ -2,7 +2,7 @@
 #define CARTESIAN_POINT_2_H
 // Since we want kernels extensiable, we need a base class for them
 // and defer the instantiation;
-
+#include<Origin.h>
 namespace SCGAL {
 	template <class R_>// R_:: representation?
 	class PointC2 {
@@ -17,7 +17,7 @@ namespace SCGAL {
 	public:
 
 
-		PointC2() {}
+		PointC2() {};
 
 		PointC2(const Origin &)
 			: base(NULL_VECTOR) {}
@@ -29,6 +29,18 @@ namespace SCGAL {
 		friend void swap(Self& a, Self& b) {
 			swap(a.base, b.base);
 		}
+
+		const FT& x() const
+		{
+			return base.x();
+		}
+
+		const FT& y() const
+		{
+			return base.y();
+		}
+
+
 
 	};
 }
